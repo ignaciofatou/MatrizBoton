@@ -6,7 +6,6 @@
 
 package pkgmatriz;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -15,8 +14,8 @@ import javax.swing.JLabel;
  */
 public class MatrizBoton extends javax.swing.JFrame {
 
-    JButton matrizBotones[][];
-    JLabel  matrizResult [][];
+    JLabel matrizUsuario[][];
+    JLabel matrizResult [][];
     final int ANCHO_BTN  = 40;
     final int ALTO_BTN   = 40;
     final int MARGEN_BTN = 5;
@@ -27,14 +26,14 @@ public class MatrizBoton extends javax.swing.JFrame {
     public MatrizBoton() {
         initComponents();
         actualizaPaneles();
-    }
+     }
+    
     
     private void actualizaPaneles(){
         
         //Obtenemos el Numero de Columnas y Filas
         int numCol = Integer.valueOf(jCBColumnas.getSelectedItem().toString());
         int numFil = Integer.valueOf(jCBFilas.getSelectedItem().toString());
-        System.out.println("Columnas: " + numCol + " - Filas: " + numFil);
         
         //Inicializamos el Panel de los Botones
         inicializaPanelBotones(numCol, numFil);
@@ -49,14 +48,11 @@ public class MatrizBoton extends javax.swing.JFrame {
         //Limpiamos el Panel
         jPanelBotones.removeAll();
         
-        //Cambiamos el Tamaño del Panel de Botones
-        resizePanelBotones(numCol, numFil);
-        
         //Añadimos los Botones al Panel de Botones
         generaBotones();
         
-        //Refrescamos el Panel de Botones
-        refrescaPanelBotones();
+        //Cambiamos el Tamaño del Panel de Botones
+        resizePanelBotones(numCol, numFil); 
     }
     //Cambiamos el Tamaño del Panel de Botones
     private void resizePanelBotones(int numCol, int numFil){
@@ -65,12 +61,6 @@ public class MatrizBoton extends javax.swing.JFrame {
         int altoPanel  = (MARGEN_BTN + 2) + ((ALTO_BTN  + MARGEN_BTN) * numFil);
         System.out.println("Tamaño Panel Botones - Ancho: " + anchoPanel + " - Alto: " + altoPanel);
         jPanelBotones.setSize(anchoPanel, altoPanel);
-    }
-    //Actualiza Visualmente el Panel de los Botones
-    private void refrescaPanelBotones(){
-        //Refrescamos el Panel de los Botones
-        jPanelBotones.validate();
-        jPanelBotones.repaint();
     }
 
     private void inicializaPanelResultado(int numCol, int numFil){
@@ -85,9 +75,6 @@ public class MatrizBoton extends javax.swing.JFrame {
         
         //Añadimos los label al Panel de Resultado
         generaLabel();
-        
-        //Refrescamos el Panel de Resultados
-        refrescaPanelResultado();
     }
     //Reposiciona el Panel del Resultado
     private void posicionaPanelResultado(){
@@ -104,19 +91,10 @@ public class MatrizBoton extends javax.swing.JFrame {
         System.out.println("Tamaño Panel Resultado - Ancho: " + anchoPanel + " - Alto: " + altoPanel);
         jPanelResult.setSize(anchoPanel, altoPanel);
     }
-    //Actualiza Visualmente el Panel del Resultado
-    private void refrescaPanelResultado(){
-        //Refrescamos el Panel del Resultado
-        jPanelResult.validate();
-        jPanelResult.repaint();
-    }
 
     private void inicializaPanelSuperior(){        
         //Cambiamos el Tamaño del Panel Superior
         resizePanelSuperior();
-        
-        //Refrescamos el Panel Superior
-        refrescaPanelSuperior();
     }
     //Cambiamos el Tamaño del Panel Superior
     private void resizePanelSuperior(){
@@ -126,13 +104,7 @@ public class MatrizBoton extends javax.swing.JFrame {
         int altoPanel  = jPanelResult.getY() + jPanelResult.getHeight() + MARGEN_BTN;
         System.out.println("Tamaño Panel Superior - Ancho: " + anchoPanel + " - Alto: " + altoPanel);
         jPanelSuperior.setSize(anchoPanel, altoPanel);
-    }
-    //Actualiza Visualmente el Panel del Resultado
-    private void refrescaPanelSuperior(){
-        //Refrescamos el Panel Superior
-        jPanelSuperior.validate();
-        jPanelSuperior.repaint();
-    }    
+    } 
 
     
     private void generaBotones(){
@@ -145,18 +117,19 @@ public class MatrizBoton extends javax.swing.JFrame {
         int posBotonesY = MARGEN_BTN + 1;
 
         //Inicializamos las Matrices
-        matrizBotones = new JButton[numFilas][numColumnas];
+        matrizUsuario = new JLabel[numFilas][numColumnas];
         
         //Generamos todos los Botones del Panel de Botones
         for (int filas = 0; filas < numFilas; filas++) {
             for (int colum = 0; colum < numColumnas; colum++) {
                 //Nuevo boton
-                matrizBotones[filas][colum] = new JButton();
-                matrizBotones[filas][colum].setSize(ANCHO_BTN, ALTO_BTN);
-                matrizBotones[filas][colum].setLocation(posBotonesX, posBotonesY);
-
+                matrizUsuario[filas][colum] = new JLabel();
+                matrizUsuario[filas][colum].setSize(ANCHO_BTN, ALTO_BTN);
+                matrizUsuario[filas][colum].setLocation(posBotonesX, posBotonesY);
+                matrizUsuario[filas][colum].setIcon(new javax.swing.ImageIcon(getClass().getResource("../Imagenes/Question.png")));
+                
                 //Añadimos los Botones a sus Paneles
-                jPanelBotones.add(matrizBotones[filas][colum]);
+                jPanelBotones.add(matrizUsuario[filas][colum]);
 
                 //Incrementamos X
                 posBotonesX = posBotonesX + ANCHO_BTN + MARGEN_BTN;
@@ -167,7 +140,7 @@ public class MatrizBoton extends javax.swing.JFrame {
             //Incrementamos Y
             posBotonesY = posBotonesY + ALTO_BTN + MARGEN_BTN;
         }
-    }
+     }
     
     private void generaLabel(){
         
